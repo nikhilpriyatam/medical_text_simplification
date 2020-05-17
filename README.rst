@@ -87,17 +87,21 @@ Evaluating DAE
 
 * Get the predictions using :code:`fairseq-interactive`
 
-.. code-block:: bash
+  .. code-block:: bash
 
-   CUDA_VISIBLE_DEVICES=2 fairseq-interactive \
-   --beam 5 \
-   -s nen -t sen \
-   --path <path_to_trained_model> \
-   --input <inp_file_path> \
-   --max-tokens 4096 \
-   --num-workers 32 \
-   <path_to_bin_dir> > <path_to_prediction_file>
+     CUDA_VISIBLE_DEVICES=2 fairseq-interactive \
+     --beam 5 \
+     -s nen -t sen \
+     --path <path_to_trained_model> \
+     --input <inp_file_path> \
+     --max-tokens 4096 \
+     --num-workers 32 \
+     <path_to_bin_dir> > <path_to_prediction_file>
 
 * Postprocess the output
 
   :code:`python postprocess.py <path_to_ip_pred_file> <path_to_processed_pred_file>`
+
+* Evaluate the predictions against gold-standard.
+
+  :code:`python evaluate.py --source <SOURCE_PATH> --target <TARGET_PATH> --hypothesis <HYPOTHESIS_PATH>`
