@@ -38,7 +38,7 @@ Training DAE
 
 * Create three files for train, development and test which contains medical sentences. For now, we assume that the extension for these files is .sen which denotes simple English.
 
-* Generate aligned train, development and test files between noisy English (.nen) and simple English (.sen) using :code:`preprocess.py` which generates the source-target pairs. In the source sentences, medical concept mentions are replaced by their UMLS concept names. This modules uses `PyMetaMap <https://github.com/AnthonyMRios/pymetamap>`__. Ensure that this tool is installed and is running a MetaMap server.
+* Generate aligned train, development and test files between noisy English (.nen) and simple English (.sen) using :code:`preprocess.py` which generates the source-target pairs. In the source sentences, medical concept mentions are replaced by their UMLS concept names. This modules uses `PyMetaMap <https://github.com/AnthonyMRios/pymetamap>`__. Ensure that this tool is installed. Also ensure that MetaMap server is running as a background process. The path to installed MetaMap folder (currently hardcoded) needs to be changed in :code:`preprocess.py` before executing it.
 
   Usage :code:`python preprocess.py <inp_file> <op_src_file> <op_tgt_file>`
 
@@ -47,36 +47,38 @@ Training DAE
 
 * Preprocess the tokenized data using :code:`fairseq-preprocess`
 
-.. code-block:: none
-   fairseq-preprocess \
-   --task translation \
-   -s nen -t sen \
-   --trainpref <prefix_to_train_files>
-   --validpref <prefix_to_dev_files>
-   --testpref <comma_separated_prefixes_to_test_files>
-   --destdir <path_to_bin_dir>
-   --workers 16
-   --srcdict <path_to_vocab_fairseq_style>
-   --tgtdict <path_to_vocab_fairseq_style>
+  .. code-block:: bash
+
+     fairseq-preprocess \
+     --task translation \
+     -s nen -t sen \
+     --trainpref <prefix_to_train_files>
+     --validpref <prefix_to_dev_files>
+     --testpref <comma_separated_prefixes_to_test_files>
+     --destdir <path_to_bin_dir>
+     --workers 16
+     --srcdict <path_to_vocab_fairseq_style>
+     --tgtdict <path_to_vocab_fairseq_style>
   
 * Train the autoencoder model using :code:`fairseq-transformer`
 
-.. code-block:: bash
-   CUDA_VISIBLE_DEVICES=2 fairseq-train <path_to_bin_dir> \
-   --arch transformer \
-   --optimizer adam \
-   --adam-betas '(0.9, 0.98)' \
-   --clip-norm 0.0 \
-   --lr 5e-4 \
-   --lr-scheduler inverse_sqrt \
-   --warmup-updates 4000 \
-   --weight-decay 0.0001 \
-   --criterion label_smoothed_cross_entropy \
-   --label-smoothing 0.1 \
-   --max-tokens 2048 \
-   --max-epoch 10 \
-   --num-workers 16 \
-   --save-dir <path_where_checkpoints_are_to_be_stored>
+  .. code-block:: bash
+
+     CUDA_VISIBLE_DEVICES=2 fairseq-train <path_to_bin_dir> \
+     --arch transformer \
+     --optimizer adam \
+     --adam-betas '(0.9, 0.98)' \
+     --clip-norm 0.0 \
+     --lr 5e-4 \
+     --lr-scheduler inverse_sqrt \
+     --warmup-updates 4000 \
+     --weight-decay 0.0001 \
+     --criterion label_smoothed_cross_entropy \
+     --label-smoothing 0.1 \
+     --max-tokens 2048 \
+     --max-epoch 10 \
+     --num-workers 16 \
+     --save-dir <path_where_checkpoints_are_to_be_stored>
 
 
 ==============
@@ -86,6 +88,7 @@ Evaluating DAE
 * Get the predictions using :code:`fairseq-interactive`
 
 .. code-block:: bash
+
    CUDA_VISIBLE_DEVICES=2 fairseq-interactive \
    --beam 5 \
    -s nen -t sen \
