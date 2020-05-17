@@ -34,11 +34,12 @@ DAE for Medical Text Simplification
 Training DAE
 ============
 
-* In order to train the model, follow the below mentioned steps. We use `fairseq` for training and inference.
+* In order to train the model, follow the below mentioned steps. We use :code:`fairseq` for training and inference.
 
-* Create three files for train, development and test which contains medical sentences.For now, we assume that the extension for these files is .sen which denotes simple english.
+* Create three files for train, development and test which contains medical sentences. For now, we assume that the extension for these files is .sen which denotes simple English.
 
-* Generate aligned train, development and test files between noisy English (.nen) and simple English (.sen) using :code:`preprocess.py` which generates the source-target pairs. In the source sentences, medical concept mentions are replaced by their UMLS concept names. 
+* Generate aligned train, development and test files between noisy English (.nen) and simple English (.sen) using :code:`preprocess.py` which generates the source-target pairs. In the source sentences, medical concept mentions are replaced by their UMLS concept names. This modules uses `PyMetaMap <https://github.com/AnthonyMRios/pymetamap>`__. Ensure that this tool is installed and is running a MetaMap server.
+
    Usage: :code:`python preprocess.py <inp_file> <op_src_file> <op_tgt_file>`
 
 * Tokenize the source and target files using scibert tokens.
