@@ -19,7 +19,7 @@ In case you need access to the training data, kindly drop us an email!
 DAE for Medical Text Simplification 
 ===================================
 
-.. image:: https://github.com/nikhilpriyatam/medical_text_simplification/blob/master/images/MTS_architecture.jpg?raw=true
+.. image:: https://github.com/nikhilpriyatam/medical_text_simplification/blob/master/images/MTS_architecture.png
    :height: 100px
    :width: 200 px
    :scale: 50 %
