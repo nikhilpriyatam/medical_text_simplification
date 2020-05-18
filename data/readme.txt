@@ -1,8 +1,6 @@
-Keep all the source and target files in this folder.
-Keep all the prediction (hypothesis) files in the postprocessed folder.
+## Data files
 
-Run the evaluation code as follows:
-python evaluate.py --path <path_to_evaluation_folder>
+Keep all the source(difficult) and target(simple) files in this folder. The source files should have the extension .en and the target files should have the extension .sen
 
-This will save a file called metrics.csv in your current working directory.
-You can also pass the argument --print_metrics to the evaluate.py code to print the output metrics in a pandas dataframe.
+
+The aligned files refer to the EW-SEW dataset and the gold files refer to the Medical Paper-Blog dataset.
